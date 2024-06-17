@@ -1,32 +1,5 @@
-using GeoParams, GeoParamsKernels
-using Test 
-
 ni       = 5,5
 args     = (T=fill(1200, ni...), P=fill(1e9, ni...))
-
-@testset "Viscosity" begin 
-    # single phase
-    rheology = DiffusionCreep()
-    ρ        = zeros(ni)
-    compute_density!(ρ, rheology, args)
-    @test all(x->x ≈ 5695.6, ρ)
-    
-    # multi-phase
-    rheologies = (
-        SetMaterialParams(;
-            Phase   = 1,
-            Density = PT_Density(),
-        ),
-        SetMaterialParams(;
-            Phase   = 2,
-            Density = PT_Density(),
-        ),
-    )
-    phases    = ones(Int, ni)
-    compute_density!(ρ, phases, rheologies, args)
-    @test all(x->x ≈ 5695.6, ρ)
-end 
-
 
 @testset "Density" begin 
     # single phase
