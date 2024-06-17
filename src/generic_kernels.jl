@@ -33,6 +33,7 @@ end
 end
 
 # generate kernels
+
 import GeoParams: compute_density!, 
     compute_conductivity!,
     compute_dϕdT!,
@@ -41,7 +42,7 @@ import GeoParams: compute_density!,
     compute_meltfraction!,
     compute_radioactive_heat!,
     compute_shearheating!,
-    compute_wave_velocity!,
+    compute_wave_velocity!
 
 fun_inplace = (
     :compute_density!, 
