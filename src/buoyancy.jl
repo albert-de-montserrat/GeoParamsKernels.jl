@@ -6,7 +6,7 @@ Calculate the buoyance forces `ρg` for the given GeoParams.jl `rheology` object
 function compute_buoyancy!(ρg, rheology, args)
     ni = size(ρg)
     backend = KernelAbstractions.get_backend(ρg)
-    kernel! = compute_ρg_kernel!(backend)
+    kernel! = compute_ρg_kernel!(backend, 256)
     kernel!(ρg, rheology, args, ndrange = ni) 
     KernelAbstractions.synchronize(backend)
     return nothing
@@ -26,7 +26,7 @@ Calculate the buoyance forces `ρg` for the given GeoParams.jl `rheology` object
 function compute_buoyancy!(ρg, phases, rheology, args)
     ni = size(ρg)
     backend = KernelAbstractions.get_backend(ρg)
-    kernel! = compute_ρg_kernel!(backend)
+    kernel! = compute_ρg_kernel!(backend, 256)
     kernel!(ρg, phases, rheology, args, ndrange = ni) 
     KernelAbstractions.synchronize(backend)
     return nothing

@@ -7,6 +7,7 @@ function compute_fun!(A, fun::F, rheology, args) where F<:Function
     backend = KernelAbstractions.get_backend(A)
     kernel! = compute_fun_kernel!(backend, 256)
     kernel!(A, rheology, args, fun, ndrange = ni) 
+    KernelAbstractions.synchronize(backend)
     return nothing
 end
 
@@ -23,6 +24,7 @@ function compute_fun!(A, fun::F, phases, rheology, args) where F<:Function
     backend = KernelAbstractions.get_backend(A)
     kernel! = compute_fun_kernel!(backend, 256)
     kernel!(A, phases, rheology, args, fun, ndrange = ni) 
+    KernelAbstractions.synchronize(backend)
     return nothing
 end
 
