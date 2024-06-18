@@ -31,20 +31,20 @@ end
     compute_heatcapacity!(A, rheology, args)
     @test all(x->x == 1050, A)
     
-    # # multi-phase
-    # rheologies = (
-    #     SetMaterialParams(;
-    #         Phase        = 1,
-    #         HeatCapacity = ConstantHeatCapacity(),
-    #     ),
-    #     SetMaterialParams(;
-    #         Phase        = 2,
-    #         HeatCapacity = ConstantHeatCapacity(),
-    #     ),
-    # )
-    # phases    = ones(Int, ni)
-    # compute_heatcapacity!(A, phases, rheology, args)
-    # @test all(x->x == 1050, A)
+    # multi-phase
+    rheologies = (
+        SetMaterialParams(;
+            Phase        = 1,
+            HeatCapacity = ConstantHeatCapacity(),
+        ),
+        SetMaterialParams(;
+            Phase        = 2,
+            HeatCapacity = ConstantHeatCapacity(),
+        ),
+    )
+    phases    = ones(Int, ni)
+    compute_heatcapacity!(A, phases, rheologies, args)
+    @test all(x->x == 1050, A)
 end 
 
 @testset "Radioactive heat" begin 
@@ -54,20 +54,20 @@ end
     compute_radioactive_heat!(A, rheology, args)
     @test all(x->x == 1e-6, A)
     
-    # # multi-phase
-    # rheologies = (
-    #     SetMaterialParams(;
-    #         Phase           = 1,
-    #         RadioactiveHeat = ConstantRadioactiveHeat(),
-    #     ),
-    #     SetMaterialParams(;
-    #         Phase           = 2,
-    #         RadioactiveHeat = ConstantRadioactiveHeat(),
-    #     ),
-    # )
-    # phases    = ones(Int, ni)
-    # compute_radioactive_heat!(A, phases, rheology, args)
-    # @test all(x->x == 1e-6, A)
+    # multi-phase
+    rheologies = (
+        SetMaterialParams(;
+            Phase           = 1,
+            RadioactiveHeat = ConstantRadioactiveHeat(),
+        ),
+        SetMaterialParams(;
+            Phase           = 2,
+            RadioactiveHeat = ConstantRadioactiveHeat(),
+        ),
+    )
+    phases    = ones(Int, ni)
+    compute_radioactive_heat!(A, phases, rheologies, args)
+    @test all(x->x == 1e-6, A)
 end
 
 @testset "Latent heat" begin
@@ -77,20 +77,20 @@ end
     compute_latent_heat!(A, rheology, args)
     @test all(x->x == 4e5, A)
     
-    # # multi-phase
-    # rheologies = (
-    #     SetMaterialParams(;
-    #         Phase      = 1,
-    #         LatentHeat = ConstantLatentHeat(),
-    #     ),
-    #     SetMaterialParams(;
-    #         Phase      = 2,
-    #         LatentHeat = ConstantLatentHeat(),
-    #     ),
-    # )
-    # phases    = ones(Int, ni)
-    # compute_latent_heat!(A, phases, rheology, args)
-    # @test all(x->x == 4e5, A)
+    # multi-phase
+    rheologies = (
+        SetMaterialParams(;
+            Phase      = 1,
+            LatentHeat = ConstantLatentHeat(),
+        ),
+        SetMaterialParams(;
+            Phase      = 2,
+            LatentHeat = ConstantLatentHeat(),
+        ),
+    )
+    phases    = ones(Int, ni)
+    compute_latent_heat!(A, phases, rheologies, args)
+    @test all(x->x == 4e5, A)
 end 
 
 @testset "Density" begin 
