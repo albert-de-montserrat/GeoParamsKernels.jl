@@ -133,3 +133,25 @@ end
     compute_buoyancy!(ρg, phases, rheologies, args)
     @test all(x->x ≈ 5695.6 * 9.81, ρg)
 end
+
+@testset "Viscosity" begin 
+    # single phase
+    phases   = ones(Int, ni) 
+    rheology = SetMaterialParams(; CompositeRheology = CompositeRheology((LinearViscous(),)))
+    A       = zeros(ni)
+    compute_viscosity_τII!(A, rheology, 1.0, args)
+    @test all(x->x ≈ 1e20, A)
+    compute_viscosity_εII!(A, rheology, 1.0, args)
+    @test all(x->x ≈ 1e20, A)
+    
+    # multi-phase
+    rheologies = (
+        SetMaterialParams(; Phase = 1, CompositeRheology = CompositeRheology((LinearViscous(),))),
+        SetMaterialParams(; Phase = 2, CompositeRheology = CompositeRheology((LinearViscous(),))),
+    )
+    A       .= zeros(ni)
+    compute_viscosity_τII!(A, phases, rheologies, 1.0, args)
+    @test all(x->x ≈ 1e20, A)
+    compute_viscosity_εII!(A, phases, rheologies, 1.0, args)
+    @test all(x->x ≈ 1e20, A)
+end
